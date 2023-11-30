@@ -1,14 +1,25 @@
 #include <iostream>
-
+#include "marche.h"
 
 int main()
 {
-    //Test Produit
-    /*
-   Produit Chocolat(10122);
-   Chocolat.setcoutDeBase(42);
-   Chocolat.setCoutDeProduction(666);
-   Chocolat.setCoutDeProduction(13);
-   std::cout << " ID : " << Chocolat.getId() << "  \n Cout de Base : " << Chocolat.getcoutDeBase() << " \n Cout de Production : " << Chocolat.getCoutDeProduction() << std::endl;
-	*/
+	auto marche = Marche::getInstance();
+
+	std::vector<std::pair<Produit*, int>> recetteBrut;
+	Produit p1(0, 1, 2, recetteBrut);
+	Produit p2(3, 4, 5, recetteBrut);
+
+	std::vector<std::pair<Produit*, int>> recetteComposee = {
+		std::make_pair(&p1, 2),
+		std::make_pair(&p2, 3)
+	};
+	Produit p3(6, 7, 8, recetteComposee);
+
+	marche->enregistrerProduit(std::make_shared<Produit>(p1));
+	marche->enregistrerProduit(std::make_shared<Produit>(p2));
+	marche->enregistrerProduit(std::make_shared<Produit>(p3));
+
+	std::cout << marche->getProduit(6)->getCoutDeBase() << std::endl;
+
+	return 0;
 }
