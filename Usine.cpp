@@ -34,7 +34,7 @@ Produit::~Produit()
 
 
 
-Usine::Usine(double _coutMaintenance, int _productivite, int _nombreEmployes, std::shared_ptr<Produit> _produitType)
+Usine::Usine(double _coutMaintenance, int _productivite, int _nombreEmployes, Produit* _produitType)
 {
 	coutMaintenance = _coutMaintenance;
 	productivite = _productivite;
@@ -46,6 +46,7 @@ Usine::Usine(double _coutMaintenance, int _productivite, int _nombreEmployes, st
 Usine::~Usine()
 {
 	stockProduits.clear();
+	delete produitType;
 }
 
 // getters
@@ -61,9 +62,14 @@ int Usine::getNombreEmployes()
 {
 	return nombreEmployes;
 }
-std::shared_ptr<Produit> Usine::getProduitType() 
+Produit* Usine::getProduitType() 
 {
 	return produitType;
+}
+std::vector<std::shared_ptr<Produit>> Usine::getStockProduitsFinis()
+{
+	std::vector<std::shared_ptr<Produit>> tempoStockProduits = stockProduitsFinis;
+	return tempoStockProduits;
 }
 
 // setters
@@ -96,11 +102,17 @@ void Usine::ajouterProduitFini(std::shared_ptr<Produit> produit)
 	stockProduitsFinis.push_back(produit);
 }
 
+void Usine::ajouterAuStock(std::vector<std::shared_ptr<Produit>> &produits)
+{
+	stockProduits.insert(std::end(stockProduits), std::begin(produits), std::end(produits));
+	produits.clear();
+}
+
 // recuperer produit de fabrication au stock
 std::shared_ptr<Produit> Usine::recupererProduitStockProd(int idProduit)
 {
 	std::shared_ptr<Produit> prodARecuperer;
-	auto iterator = std::begin(stockProduitsFinis);
+	auto iterator = std::begin(stockProduits);
 	while (iterator != std::end(stockProduits))
 	{
 		if ((*iterator)->getId() == idProduit)
@@ -109,15 +121,64 @@ std::shared_ptr<Produit> Usine::recupererProduitStockProd(int idProduit)
 			stockProduits.erase(iterator);
 			break;
 		}
+		iterator++;
 	}
 	return prodARecuperer;
 }
+
+bool Usine::peutProduire(std::vector<std::pair<Produit*, int>> recette)
+{
+	// si matiere premiere
+	if (recette.size() == NULL)
+	{
+		return true;
+	}
+
+	std::vector<std::shared_ptr<Produit>> stockTemporaire = stockProduits;
+
+	for (int i = 0; i < productivite; i++)
+	{
+		for (std::pair<Produit*, int> produit : recette)
+		{
+			for (int j = 0; j < produit.second; j++)
+			{
+				// recuperer un produit de la recette et le supprimer
+				std::shared_ptr<Produit> prodAUtiliser;
+				auto iterator = std::begin(stockTemporaire);
+				while (iterator != std::end(stockTemporaire))
+				{
+					if ((*iterator)->getId() == produit.first->getId())
+					{
+						prodAUtiliser = (*iterator);
+						stockTemporaire.erase(iterator);
+						break;
+					}
+					iterator++;
+				}
+				if (prodAUtiliser == nullptr)
+				{
+					std::cout << "l'entreprise ne peux pas produire, pas assez de stock de produits de fabrication" << std::endl;
+					return false;
+				}
+			}
+		}
+	}
+
+	return true;
+}
+
+
 
 // Produire des produits
 std::vector<std::shared_ptr<Produit>> Usine::produire(std::vector<std::pair<Produit*, int>> recette, int salaireEmployes)
 {
 	std::vector<std::shared_ptr<Produit>> stockAjoutFinal;
-	double coutProductionTotal = coutMaintenance * salaireEmployes * nombreEmployes;
+	double coutProductionTotal = coutMaintenance + (salaireEmployes * nombreEmployes);
+
+	if (!peutProduire(recette))
+	{
+		return stockAjoutFinal;
+	}
 
 	// verifie si c'est une matiere premiere (recette vide)
 	if (recette.size() == NULL)
@@ -135,27 +196,11 @@ std::vector<std::shared_ptr<Produit>> Usine::produire(std::vector<std::pair<Prod
 		std::vector<std::shared_ptr<Produit>> stockTemporaire;
 		for (std::pair<Produit*, int> produit : recette)
 		{
-			for(int j = 0; j < produit.second; i++)
+			for(int j = 0; j < produit.second; j++)
 			{
 				// recuperer un produit de fabrication pour l'utiliser
 				std::shared_ptr<Produit> prodAUtiliser = recupererProduitStockProd(produit.first->getId());
-				if (prodAUtiliser != nullptr)
-				{
-					stockTemporaire.push_back(prodAUtiliser);
-					coutProductionTotal += prodAUtiliser->getCoutDeBase();
-				}
-				else
-				{
-					std::cout << "pas assez de produit pour creer le nouveau" << std::endl;
-
-					// remettre les produits dans le stock de fabrication
-					for (std::shared_ptr<Produit> produitARemettre : stockTemporaire)
-					{
-						stockProduits.push_back(produitARemettre);
-
-					}
-					goto calculCoutProd;
-				}
+				coutProductionTotal += prodAUtiliser->getCoutDeBase();
 			}
 		}
 		stockAjoutFinal.push_back(std::make_shared<Produit>(produitType->getId()));
@@ -172,24 +217,16 @@ std::vector<std::shared_ptr<Produit>> Usine::produire(std::vector<std::pair<Prod
 	return stockAjoutFinal;
 }
 
-std::vector<std::shared_ptr<Produit>> Usine::recupererProduits(Produit produit, int quantite)
+std::vector<std::shared_ptr<Produit>> Usine::recupererProduits()
 {
-	// Calcul du cout de production du produit
-	int idProduit = produit.getId();
-	std::vector<std::shared_ptr<Produit>> produitsARecuperer;
+	std::vector<std::shared_ptr<Produit>> tempoStockProduits = stockProduitsFinis;
+	stockProduitsFinis.erase(stockProduitsFinis.begin(), stockProduitsFinis.end());
+	return tempoStockProduits;
+}
 
-	// parcourir le stockage pour recuperer les produits
-	auto iterator = std::begin(stockProduitsFinis);
-	int nbProduitsSupprimes = 0;
-	while (iterator != std::end(stockProduitsFinis))
-	{
-		if ((*iterator)->getId() == idProduit)
-		{
-			produitsARecuperer.push_back(*iterator);
-			stockProduits.erase(iterator);
-			nbProduitsSupprimes++;
-		}
-			
-	}
-	return produitsARecuperer;
+std::vector<std::shared_ptr<Produit>> Usine::recupererProduits(int quantite)
+{
+	std::vector<std::shared_ptr<Produit>> tempoStockProduits = stockProduitsFinis;
+	stockProduitsFinis.erase(stockProduitsFinis.begin(), stockProduitsFinis.begin() + quantite);
+	return tempoStockProduits;
 }
