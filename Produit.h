@@ -17,6 +17,7 @@ public:
     double getCoutDeBase();
     void setCoutDeProduction(double _coutDeProduction);
     double getCoutDeProduction();
+    std::vector<std::pair<Produit*, int>> getRecette();
   
 protected:
     int id;

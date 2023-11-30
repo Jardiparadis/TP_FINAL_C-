@@ -60,3 +60,8 @@ double Produit::getCoutDeProduction()
 {
     return coutDeProduction;
 }
+
+std::vector<std::pair<Produit*, int>> Produit::getRecette()
+{
+    return recette;
+}
