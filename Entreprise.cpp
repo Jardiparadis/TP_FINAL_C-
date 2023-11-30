@@ -68,9 +68,9 @@ public:
 	{
 		return stockVentes;
 	}
-	const std::map<int, double>& getStockstockMatierePremiere()
+	const std::map<int, double>& getStockMatierePremiere()
 	{
-		return stockstockMatierePremiere;
+		return stockMatierePremiere;
 	}
 	const std::map<int, double>& getGrillePrix()
 	{

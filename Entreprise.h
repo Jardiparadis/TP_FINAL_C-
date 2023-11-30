@@ -37,7 +37,7 @@ public:
 	//const std::vector<std::shared_ptr<Usine>>& getUsines();
 	double getSalaireEmployes();
 	const std::map<int, double>& getStockVentes();
-	const std::map<int, double>& getStockstockMatierePremiere();
+	const std::map<int, double>& getStockMatierePremiere();
 	const std::map<int, double>& getGrillePrix();
 
 	// Methods
@@ -52,7 +52,7 @@ private:
 	double salaireEmployes;
 	// Produit, quantité
 	std::map<int, double> stockVentes;
-	std::map<int, double> stockstockMatierePremiere;
+	std::map<int, double> stockMatierePremiere;
 	std::map<int, double> grillePrix;
 
 	void ameliorerNiveauRD();
