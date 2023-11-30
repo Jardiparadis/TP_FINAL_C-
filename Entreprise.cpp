@@ -5,8 +5,12 @@
 #include <map>
 #include <cmath>
 
+//#include "Produit.h"
+//#include "Usine.h"
+
 #define initialRDCost 10000;
 #define nextRDLevelCost(level) (level * exp(level))
+#define prixUsine 42;
 
 enum class EntrepriseType
 {
@@ -22,6 +26,7 @@ public:
 		return 42;
 	}
 };
+
 class Produit;
 
 class Entreprise
@@ -63,9 +68,9 @@ public:
 	{
 		return stockVentes;
 	}
-	const std::map<int, double>& getStockProduction()
+	const std::map<int, double>& getStockstockMatierePremiere()
 	{
-		return stockProduction;
+		return stockstockMatierePremiere;
 	}
 	const std::map<int, double>& getGrillePrix()
 	{
@@ -73,6 +78,17 @@ public:
 	}
 
 	// Methods
+
+	/*
+	std::vector<std::shared_ptr<Usine>> creerUsine(std::vector<std::shared_ptr<Usine>> ptrListeUsines)
+	{	
+		// creation de nouvelleUsine 
+		(*ptrListUsine).push_back(nouvelleUsine);
+		capital -= prixUsine;
+		return ptrListeUsines;
+	}
+	*/
+
 
 
 private:
@@ -84,7 +100,7 @@ private:
 	double salaireEmployes;
 	// Produit, quantité
 	std::map<int, double> stockVentes;
-	std::map<int, double> stockProduction;
+	std::map<int, double> stockMatierePremiere;
 	std::map<int, double> grillePrix;
 
 
@@ -100,16 +116,13 @@ private:
 		niveauRD += 1;
 	}
 
-	void creerUsine()
-	{
-		// créer usine
-	}
 
 	void payerEmployees()
 	{
 		for (const auto& usine : usines)
 		{
 			capital -= (usine->getNombreEmployes() * salaireEmployes);
+
 		}
 	}
 
