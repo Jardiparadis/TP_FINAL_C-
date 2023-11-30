@@ -13,6 +13,25 @@ public:
 
 	~OrdreVente();
 
+	void setVendeur(std::shared_ptr<Entreprise> _ptrVendeur);
+
+	std::shared_ptr<Entreprise> getVendeur();
+
+
+	void setProduit(std::shared_ptr<Produit> _ptrProduit);
+
+	std::shared_ptr<Produit> setProduit();
+
+
+	void setQuantite(int _quantite);
+
+	int setQuantite();
+
+
+	void setPrix(double _prix);
+
+	double setPrix();
+
 
 private:
 
