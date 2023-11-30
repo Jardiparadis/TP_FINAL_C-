@@ -54,6 +54,19 @@ const std::map<int, double>& Entreprise::getGrillePrix() const
 	return grillePrix;
 }
 
+void vendre(std::shared_ptr<Produit> produit, int quantite, double prix)
+{
+	//TO DO
+	//apres ordre de vente
+}
+
+void acheterMatierePremiere(int quantite)
+{
+	//TO DO
+	//apres ordre de vente
+}
+
+
 void Entreprise::ameliorerNiveauRD()
 {
 	double cost = nextRDLevelCost(niveauRD + 1);
