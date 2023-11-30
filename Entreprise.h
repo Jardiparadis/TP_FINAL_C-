@@ -41,7 +41,7 @@ public:
 	const std::map<int, double>& getGrillePrix();
 
 	// Methods
-	//std::vector<std::shared_ptr<Usine>> creerUsine(std::vector<std::shared_ptr<Usine>> ptrListeUsines);
+	void Entreprise::creerUsine(double coutMaintenance, int productivite, int nombreEmployes, std::shared_ptr<Produit> produitType);
 
 private:
 	const std::string nom;
@@ -59,5 +59,4 @@ private:
 	void payerEmployees();
 	void fonctionner();
 	void acheterProduits();
-	//void creerUsine();
 };

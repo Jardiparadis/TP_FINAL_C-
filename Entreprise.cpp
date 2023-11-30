@@ -69,7 +69,7 @@ void Entreprise::payerEmployees()
 {
 	for (const auto& usine : usines)
 	{
-		int coutUsine = usine->getNombreEmployes() * salaireEmployes;
+		double coutUsine = usine->getNombreEmployes() * salaireEmployes;
 		// Si l'entreprise n'a pas assez de capital pour payer les employés de l'usine, celle-ci se met en grêve
 		if (capital < coutUsine)
 		{
@@ -88,4 +88,10 @@ void Entreprise::fonctionner()
 void Entreprise::acheterProduits()
 {
 
+}
+
+void Entreprise::creerUsine(double coutMaintenance, int productivite, int nombreEmployes, std::shared_ptr<Produit> produitType)
+{
+	std::shared_ptr<Usine> usine(new Usine(coutMaintenance, productivite, nombreEmployes, produitType));
+	usines.push_back(usine);
 }
