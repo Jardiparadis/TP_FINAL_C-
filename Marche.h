@@ -2,10 +2,12 @@
 
 #include <iostream>
 #include <vector>
+#include <utility>
 
 #include "Produit.h"
+#include "Entreprise.h"
+#include "OdreVente.h"
 
-class Entreprise;
 
 class Marche
 {
@@ -20,6 +22,6 @@ private:
 	static Marche* instanceMarche;
 	std::vector<std::shared_ptr<Entreprise>> entreprises;
 	std::vector<std::shared_ptr<Produit>> produits;
-
-	Marche();
+	std::vector<std::shared_ptr<OrdreVente>> misesenVente;
+		Marche();
 };
