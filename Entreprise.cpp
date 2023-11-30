@@ -56,7 +56,7 @@ const std::map<int, double>& Entreprise::getGrillePrix()
 
 void Entreprise::mettreStockEnVente()
 {
-	Marche *marche = Marche::getInstance();
+	std::shared_ptr<Marche> marche = Marche::getInstance();
 	for (const auto& produit : stockVentes)
 	{
 		std::shared_ptr<Produit> test = produit.first;

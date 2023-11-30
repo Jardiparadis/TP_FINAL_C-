@@ -2,17 +2,14 @@
 
 Marche::~Marche()
 {
-	if (instanceMarche)
-	{
-		delete instanceMarche;
-	}
+	std::cout << "Marche detruit" << std::endl;
 }
 
-Marche* Marche::getInstance()
+std::shared_ptr<Marche> Marche::getInstance()
 {
 	if (!instanceMarche)
 	{
-		instanceMarche = new Marche();
+		instanceMarche = std::shared_ptr<Marche>(new Marche());
 	}
 	return instanceMarche;
 }
@@ -49,4 +46,4 @@ void Marche::creerOrdreVente(std::shared_ptr<Entreprise> entreprise, std::shared
 	misesenVente.push_back(ordreVente);
 }
 
-Marche* Marche::instanceMarche = NULL;
+std::shared_ptr<Marche> Marche::instanceMarche = NULL;
