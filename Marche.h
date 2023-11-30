@@ -6,7 +6,7 @@
 
 #include "Produit.h"
 #include "Entreprise.h"
-#include "OdreVente.h"
+#include "OrdreVente.h"
 
 
 class Marche
@@ -23,5 +23,5 @@ private:
 	std::vector<std::shared_ptr<Entreprise>> entreprises;
 	std::vector<std::shared_ptr<Produit>> produits;
 	std::vector<std::shared_ptr<OrdreVente>> misesenVente;
-		Marche();
+	Marche();
 };

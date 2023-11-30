@@ -42,7 +42,7 @@ public:
 	const std::map<int, double>& getGrillePrix() const;
 
 	// Methods
-	void creerUsine(double coutMaintenance, int productivite, int nombreEmployes, std::shared_ptr<Produit> produitType);
+	void creerUsine(double coutMaintenance, int productivite, int nombreEmployes, Produit *produitType);
 	double calculerCoutTransit(const std::shared_ptr<Entreprise> entreprise) const;
 
 private:

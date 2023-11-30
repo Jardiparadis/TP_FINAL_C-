@@ -112,7 +112,7 @@ void Entreprise::acheterProduits()
 
 }
 
-void Entreprise::creerUsine(double coutMaintenance, int productivite, int nombreEmployes, std::shared_ptr<Produit> produitType)
+void Entreprise::creerUsine(double coutMaintenance, int productivite, int nombreEmployes, Produit *produitType)
 {
 	std::shared_ptr<Usine> usine(new Usine(coutMaintenance, productivite, nombreEmployes, produitType));
 	usines.push_back(usine);
