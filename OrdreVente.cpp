@@ -27,7 +27,7 @@ void OrdreVente::setVendeur(std::shared_ptr<Entreprise> _ptrVendeur)
 	ptrVendeur = _ptrVendeur;
 }
 
-std::shared_ptr<Entreprise> OrdreVente::getVendeur()
+std::shared_ptr<Entreprise> OrdreVente::getVendeur() const
 {
 	return ptrVendeur;
 }
@@ -39,7 +39,7 @@ void OrdreVente::setProduit(std::shared_ptr<Produit> _ptrProduit)
 	ptrProduit = _ptrProduit;
 }
 
-std::shared_ptr<Produit> OrdreVente::OrdreVente::setProduit()
+std::shared_ptr<Produit> OrdreVente::OrdreVente::getProduit() const
 {
 	return ptrProduit;
 }
@@ -51,7 +51,7 @@ void OrdreVente::setQuantite(int _quantite)
 	quantite = _quantite;
 }
 
-int OrdreVente::setQuantite()
+int OrdreVente::getQuantite() const
 {
 	return quantite;
 }
@@ -63,7 +63,7 @@ void OrdreVente::setPrix(double _prix)
 	prix = _prix;
 }
 
-double OrdreVente::setPrix()
+double OrdreVente::getPrix() const
 {
 	return prix;
 }

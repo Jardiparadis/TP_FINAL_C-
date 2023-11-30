@@ -39,4 +39,23 @@ std::shared_ptr<Produit> Marche::getProduit(int idProduit)
 	return NULL;
 }
 
+void Marche::creerOrdreDeVente(std::shared_ptr<Entreprise> entreprise, std::shared_ptr<Produit> produit, int quantity, double prix)
+{
+	ordresVente.push_back(OrdreVente(entreprise, produit, quantity, prix));
+}
+
+std::shared_ptr<std::vector<OrdreVente>> Marche::chercherOrdreDeVentePourProduit(std::shared_ptr<Produit> produit)
+{
+	std::shared_ptr<std::vector<OrdreVente>> ordresSurProduit(new std::vector<OrdreVente>());
+
+	for (const OrdreVente& ordreVente : ordresVente)
+	{
+		if (ordreVente.getProduit()->getId() == produit->getId())
+		{
+			ordresSurProduit->push_back(ordreVente);
+		}
+	}
+	return ordresSurProduit;
+}
+
 std::shared_ptr<Marche> Marche::instanceMarche = NULL;

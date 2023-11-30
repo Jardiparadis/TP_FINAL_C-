@@ -5,21 +5,12 @@ int main()
 {
 	auto marche = Marche::getInstance();
 
-	std::vector<std::pair<Produit*, int>> recetteBrut;
-	Produit p1(0, 1, 2, recetteBrut);
-	Produit p2(3, 4, 5, recetteBrut);
+	std::shared_ptr<Entreprise> e1(new Entreprise("aa", 20000, 30));
+	std::shared_ptr<Produit> p1(new Produit(56));
 
-	std::vector<std::pair<Produit*, int>> recetteComposee = {
-		std::make_pair(&p1, 2),
-		std::make_pair(&p2, 3)
-	};
-	Produit p3(6, 7, 8, recetteComposee);
+	marche->creerOrdreDeVente(e1, p1, 20, 50);
 
-	marche->enregistrerProduit(std::make_shared<Produit>(p1));
-	marche->enregistrerProduit(std::make_shared<Produit>(p2));
-	marche->enregistrerProduit(std::make_shared<Produit>(p3));
-
-	std::cout << marche->getProduit(6)->getCoutDeBase() << std::endl;
+	std::cout << marche->chercherOrdreDeVentePourProduit(p1)->size() << std::endl;
 
 	return 0;
 }
