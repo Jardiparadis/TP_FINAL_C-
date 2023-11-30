@@ -2,8 +2,9 @@
 
 #include <iostream>
 
-#include "Entreprise.h"
 #include "Produit.h"
+
+class Entreprise;
 
 class OrdreVente
 {

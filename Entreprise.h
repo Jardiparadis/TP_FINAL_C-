@@ -5,10 +5,12 @@
 #include <string>
 #include <vector>
 #include <map>
+#include <unordered_map>
 #include <cmath>
 
 #include "Produit.h"
 #include "Usine.h"
+#include "Marche.h"
 
 #define initialRDCost 10000;
 #define nextRDLevelCost(level) (level * exp(level))
@@ -19,7 +21,6 @@ enum class EntrepriseType
 	SECONDAIRE
 };
 
-
 class Entreprise
 {
 public:
@@ -28,7 +29,6 @@ public:
 	Entreprise(const std::string& _nom, double _capital, double _salaireEmployes);
 	~Entreprise();
 
-
 	// Getter
 	const std::string& getNom() const;
 	double getCapital() const;
@@ -36,9 +36,10 @@ public:
 	int getNiveauRD();
 	const std::vector<std::shared_ptr<Usine>>& getUsines();
 	double getSalaireEmployes();
-	const std::map<int, double>& getStockVentes();
+	const std::unordered_map<std::shared_ptr<Produit>, double>& getStockVentes();
 	const std::map<int, double>& getStockMatierePremiere();
 	const std::map<int, double>& getGrillePrix();
+	void mettreStockEnVente();
 
 	// Methods
 	//std::vector<std::shared_ptr<Usine>> creerUsine(std::vector<std::shared_ptr<Usine>> ptrListeUsines);
@@ -51,7 +52,7 @@ private:
 	std::vector<std::shared_ptr<Usine>> usines;
 	double salaireEmployes;
 	// Produit, quantité
-	std::map<int, double> stockVentes;
+	std::unordered_map<std::shared_ptr<Produit>, double> stockVentes;
 	std::map<int, double> stockMatierePremiere;
 	std::map<int, double> grillePrix;
 

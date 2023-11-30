@@ -43,4 +43,10 @@ Marche::Marche()
 {
 }
 
+void Marche::creerOrdreVente(std::shared_ptr<Entreprise> entreprise, std::shared_ptr<Produit> produit, int quantite, double prix)
+{
+	std::shared_ptr<OrdreVente> ordreVente(new OrdreVente(entreprise, produit, quantite, prix));
+	misesenVente.push_back(ordreVente);
+}
+
 Marche* Marche::instanceMarche = NULL;

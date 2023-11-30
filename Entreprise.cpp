@@ -39,7 +39,7 @@ double Entreprise::getSalaireEmployes()
 	return salaireEmployes;
 }
 
-const std::map<int, double>& Entreprise::getStockVentes()
+const std::unordered_map<std::shared_ptr<Produit>, double>& Entreprise::getStockVentes()
 {
 	return stockVentes;
 }
@@ -54,10 +54,15 @@ const std::map<int, double>& Entreprise::getGrillePrix()
 	return grillePrix;
 }
 
-void vendre(std::shared_ptr<Produit> produit, int quantite, double prix)
+void Entreprise::mettreStockEnVente()
 {
-	//TO DO
-	//apres ordre de vente
+	Marche *marche = Marche::getInstance();
+	for (const auto& produit : stockVentes)
+	{
+		std::shared_ptr<Produit> test = produit.first;
+		std::shared_ptr<Entreprise> toto(this);
+		marche->creerOrdreVente(toto, test, produit.second, 100.f);
+	}
 }
 
 void acheterMatierePremiere(int quantite)
