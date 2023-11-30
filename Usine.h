@@ -39,7 +39,7 @@ public:
 	bool Usine::peutProduire(std::vector<std::pair<Produit*, int>> recette);
 
 	// Produire des produits
-	std::vector<std::shared_ptr<Produit>> produire(std::vector<std::pair<Produit*, int>> recette, int salaireEmployes);
+	std::vector<std::shared_ptr<Produit>> produire(int salaireEmployes);
 
 	// recuperer des produits
 	std::vector<std::shared_ptr<Produit>> recupererProduits();

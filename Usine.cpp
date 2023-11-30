@@ -170,10 +170,11 @@ bool Usine::peutProduire(std::vector<std::pair<Produit*, int>> recette)
 
 
 // Produire des produits
-std::vector<std::shared_ptr<Produit>> Usine::produire(std::vector<std::pair<Produit*, int>> recette, int salaireEmployes)
+std::vector<std::shared_ptr<Produit>> Usine::produire(int salaireEmployes)
 {
 	std::vector<std::shared_ptr<Produit>> stockAjoutFinal;
 	double coutProductionTotal = coutMaintenance + (salaireEmployes * nombreEmployes);
+	std::vector<std::pair<Produit*, int>> recette = produitType->getRecette();
 
 	if (!peutProduire(recette))
 	{
