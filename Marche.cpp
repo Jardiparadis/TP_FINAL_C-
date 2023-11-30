@@ -58,4 +58,20 @@ std::shared_ptr<std::vector<OrdreVente>> Marche::chercherOrdreDeVentePourProduit
 	return ordresSurProduit;
 }
 
+void Marche::acheterOrdreDeVente(std::shared_ptr<Entreprise> entrepriseAcheteuse, std::shared_ptr<Entreprise> entrepriseVendeuse, std::shared_ptr<Produit> produit)
+{
+	int i = 0;
+	for (const OrdreVente& ordreVente : ordresVente)
+	{
+		if (ordreVente.getProduit()->getId() == produit->getId() && ordreVente.getVendeur()->getNom() == entrepriseVendeuse->getNom())
+		{
+			// entrepriseAcheteuse.capital -= prix
+			// entrepriseVendeuse.capital += prix
+			// entrepriseAcheteuse.addToStock
+			// entrepriseVendeuse.removeToStock
+		}
+		i += 1;
+	}
+}
+
 std::shared_ptr<Marche> Marche::instanceMarche = NULL;
