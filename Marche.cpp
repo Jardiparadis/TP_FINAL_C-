@@ -1,18 +1,18 @@
 #include "Marche.h"
 
-Marche::~Marche()
+Marche::Marche()
 {
-	if (instanceMarche)
-	{
-		delete instanceMarche;
-	}
 }
 
-Marche* Marche::getInstance()
+Marche::~Marche()
+{
+}
+
+std::shared_ptr<Marche> Marche::getInstance()
 {
 	if (!instanceMarche)
 	{
-		instanceMarche = new Marche();
+		instanceMarche = std::shared_ptr<Marche>(new Marche());
 	}
 	return instanceMarche;
 }
@@ -39,8 +39,4 @@ std::shared_ptr<Produit> Marche::getProduit(int idProduit)
 	return NULL;
 }
 
-Marche::Marche()
-{
-}
-
-Marche* Marche::instanceMarche = NULL;
+std::shared_ptr<Marche> Marche::instanceMarche = NULL;
