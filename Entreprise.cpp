@@ -69,6 +69,13 @@ void Entreprise::payerEmployees()
 {
 	for (const auto& usine : usines)
 	{
+		int coutUsine = usine->getNombreEmployes() * salaireEmployes;
+		// Si l'entreprise n'a pas assez de capital pour payer les employés de l'usine, celle-ci se met en grêve
+		if (capital < coutUsine)
+		{
+			usine->setProductivite(0);
+			continue;
+		}
 		capital -= (usine->getNombreEmployes() * salaireEmployes);
 	}
 }

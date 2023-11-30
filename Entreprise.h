@@ -59,4 +59,5 @@ private:
 	void payerEmployees();
 	void fonctionner();
 	void acheterProduits();
+	//void creerUsine();
 };
