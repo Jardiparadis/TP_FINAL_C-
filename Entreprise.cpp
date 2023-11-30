@@ -1,138 +1,84 @@
-#include <cstdlib>
-#include <iostream>
-#include <string>
-#include <vector>
-#include <map>
-#include <cmath>
+#include "Entreprise.h"
 
-//#include "Produit.h"
-//#include "Usine.h"
-
-#define initialRDCost 10000;
-#define nextRDLevelCost(level) (level * exp(level))
-#define prixUsine 42;
-
-enum class EntrepriseType
+Entreprise::Entreprise(const std::string &_nom, double _capital, double _salaireEmployes)
+	: nom(_nom), capital(_capital), niveauRD(1), salaireEmployes(_salaireEmployes)
 {
-	PRIMAIRE,
-	SECONDAIRE
-};
+}
 
-class Usine
+Entreprise::~Entreprise()
 {
-public:
-	int getNombreEmployes()
-	{
-		return 42;
-	}
-};
+}
 
-class Produit;
-
-class Entreprise
+const std::string& Entreprise::getNom() const
 {
-public:
-	// Ctor dtor
-	Entreprise(const std::string &_nom, double _capital) : nom(_nom), capital(_capital), niveauRD(1)
-	{
-	}
-	~Entreprise()
-	{
-	}
-	// Getter
-	const std::string& getNom() const
-	{
-		return nom;
-	}
-	double getCapital() const
-	{
-		return capital;
-	}
-	const std::pair<int, int>& getCoordonnees() const
-	{
-		return coordonnees;
-	}
-	int getNiveauRD()
-	{
-		return niveauRD;
-	}
-	const std::vector<std::shared_ptr<Usine>>& getUsines()
-	{
-		return usines;
-	}
-	double getSalaireEmployes()
-	{
-		return salaireEmployes;
-	}
-	const std::map<int, double>& getStockVentes()
-	{
-		return stockVentes;
-	}
-	const std::map<int, double>& getStockMatierePremiere()
-	{
-		return stockMatierePremiere;
-	}
-	const std::map<int, double>& getGrillePrix()
-	{
-		return grillePrix;
-	}
+	return nom;
+}
 
-	// Methods
+double Entreprise::getCapital() const
+{
+	return capital;
+}
 
-	/*
-	std::vector<std::shared_ptr<Usine>> creerUsine(std::vector<std::shared_ptr<Usine>> ptrListeUsines)
-	{	
-		// creation de nouvelleUsine 
-		(*ptrListUsine).push_back(nouvelleUsine);
-		capital -= prixUsine;
-		return ptrListeUsines;
-	}
-	*/
+const std::pair<int, int>& Entreprise::getCoordonnees() const
+{
+	return coordonnees;
+}
 
+int Entreprise::getNiveauRD()
+{
+	return niveauRD;
+}
 
+const std::vector<std::shared_ptr<Usine>>& Entreprise::getUsines()
+{
+	return usines;
+}
 
-private:
-	const std::string nom;
-	double capital;
-	std::pair<int, int> coordonnees;
-	int niveauRD;
-	std::vector<std::shared_ptr<Usine>> usines;
-	double salaireEmployes;
-	// Produit, quantité
-	std::map<int, double> stockVentes;
-	std::map<int, double> stockMatierePremiere;
-	std::map<int, double> grillePrix;
+double Entreprise::getSalaireEmployes()
+{
+	return salaireEmployes;
+}
 
+const std::map<int, double>& Entreprise::getStockVentes()
+{
+	return stockVentes;
+}
 
+const std::map<int, double>& Entreprise::getStockMatierePremiere()
+{
+	return stockMatierePremiere;
+}
 
-	void ameliorerNiveauRD()
+const std::map<int, double>& Entreprise::getGrillePrix()
+{
+	return grillePrix;
+}
+
+void Entreprise::ameliorerNiveauRD()
+{
+	double cost = nextRDLevelCost(niveauRD + 1);
+	if (capital < cost)
 	{
-		double cost = nextRDLevelCost(niveauRD + 1);
-		if (capital < cost)
-		{
-			return;
-		}
-		capital -= cost;
-		niveauRD += 1;
+		return;
 	}
+	capital -= cost;
+	niveauRD += 1;
+}
 
-
-	void payerEmployees()
+void Entreprise::payerEmployees()
+{
+	for (const auto& usine : usines)
 	{
-		for (const auto& usine : usines)
-		{
-			capital -= (usine->getNombreEmployes() * salaireEmployes);
-
-		}
+		capital -= (usine->getNombreEmployes() * salaireEmployes);
 	}
+}
 
-	void fonctionner()
-	{
-		std::cout << "L'entreprise tourne bien." << std::endl;
-	}
+void Entreprise::fonctionner()
+{
+	std::cout << "L'entreprise tourne bien." << std::endl;
+}
 
-	void acheterProduits()
-	{
+void Entreprise::acheterProduits()
+{
 
-	}
-};
+}

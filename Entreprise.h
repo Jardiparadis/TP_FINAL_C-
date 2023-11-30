@@ -7,8 +7,8 @@
 #include <map>
 #include <cmath>
 
-//#include "Produit.h"
-//#include "Usine.h"
+#include "Produit.h"
+#include "Usine.h"
 
 #define initialRDCost 10000;
 #define nextRDLevelCost(level) (level * exp(level))
@@ -25,7 +25,7 @@ class Entreprise
 public:
 
 	// Ctor dtor
-	Entreprise(const std::string& _nom, double _capital);
+	Entreprise(const std::string& _nom, double _capital, double _salaireEmployes);
 	~Entreprise();
 
 
@@ -34,7 +34,7 @@ public:
 	double getCapital() const;
 	const std::pair<int, int>& getCoordonnees() const;
 	int getNiveauRD();
-	//const std::vector<std::shared_ptr<Usine>>& getUsines();
+	const std::vector<std::shared_ptr<Usine>>& getUsines();
 	double getSalaireEmployes();
 	const std::map<int, double>& getStockVentes();
 	const std::map<int, double>& getStockMatierePremiere();
@@ -48,7 +48,7 @@ private:
 	double capital;
 	std::pair<int, int> coordonnees;
 	int niveauRD;
-	//std::vector<std::shared_ptr<Usine>> usines;
+	std::vector<std::shared_ptr<Usine>> usines;
 	double salaireEmployes;
 	// Produit, quantité
 	std::map<int, double> stockVentes;
@@ -59,5 +59,4 @@ private:
 	void payerEmployees();
 	void fonctionner();
 	void acheterProduits();
-
 };
