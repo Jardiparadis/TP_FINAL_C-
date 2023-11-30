@@ -2,38 +2,6 @@
 #include <vector>
 #include "Usine.h"
 
-int Produit::getId()
-{
-	return id;
-}
-double Produit::getCoutDeBase()
-{
-	return coutDeBase;
-}
-double Produit::getCoutDeProduction()
-{
-	return coutDeProduction;
-}
-
-void Produit::setCoutDeProduction(double coutDeProd)
-{
-	coutDeProduction = coutDeProd;
-}
-
-Produit::Produit(int _id)
-{
-	id = _id;
-	coutDeBase = 0;
-	coutDeProduction = 0;
-}
-
-Produit::~Produit()
-{
-
-}
-
-
-
 Usine::Usine(double _coutMaintenance, int _productivite, int _nombreEmployes, Produit* _produitType)
 {
 	coutMaintenance = _coutMaintenance;
