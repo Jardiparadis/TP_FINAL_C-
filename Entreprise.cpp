@@ -24,32 +24,32 @@ const std::pair<int, int>& Entreprise::getCoordonnees() const
 	return coordonnees;
 }
 
-int Entreprise::getNiveauRD()
+int Entreprise::getNiveauRD() const
 {
 	return niveauRD;
 }
 
-const std::vector<std::shared_ptr<Usine>>& Entreprise::getUsines()
+const std::vector<std::shared_ptr<Usine>>& Entreprise::getUsines() const
 {
 	return usines;
 }
 
-double Entreprise::getSalaireEmployes()
+double Entreprise::getSalaireEmployes() const
 {
 	return salaireEmployes;
 }
 
-const std::map<int, double>& Entreprise::getStockVentes()
+const std::map<int, double>& Entreprise::getStockVentes() const
 {
 	return stockVentes;
 }
 
-const std::map<int, double>& Entreprise::getStockMatierePremiere()
+const std::map<int, double>& Entreprise::getStockMatierePremiere() const
 {
 	return stockMatierePremiere;
 }
 
-const std::map<int, double>& Entreprise::getGrillePrix()
+const std::map<int, double>& Entreprise::getGrillePrix() const
 {
 	return grillePrix;
 }
@@ -59,9 +59,18 @@ void Entreprise::ameliorerNiveauRD()
 	double cost = nextRDLevelCost(niveauRD + 1);
 	if (capital < cost)
 	{
+		std::cout << "Pas assez de capital pour investir en R&D" << std::endl;
 		return;
 	}
 	capital -= cost;
+
+	// Mettre à jour les usines
+	for (const auto& usine : usines)
+	{
+		usine->setProductivite((usine->getProductivite() / niveauRD) * (niveauRD + 1));
+		usine->setNombreEmployes((usine->getNombreEmployes() / niveauRD) * (niveauRD + 1));
+	}
+
 	niveauRD += 1;
 }
 
@@ -94,4 +103,10 @@ void Entreprise::creerUsine(double coutMaintenance, int productivite, int nombre
 {
 	std::shared_ptr<Usine> usine(new Usine(coutMaintenance, productivite, nombreEmployes, produitType));
 	usines.push_back(usine);
+}
+
+double Entreprise::calculerCoutTransit(const std::shared_ptr<Entreprise> entreprise) const
+{
+	double distanceEntreEntreprises = sqrt(pow(coordonnees.first - entreprise->getCoordonnees().first, 2) + pow(coordonnees.second - entreprise->getCoordonnees().second, 2));
+	return coutTransitParKm * distanceEntreEntreprises;
 }

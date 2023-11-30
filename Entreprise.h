@@ -10,6 +10,7 @@
 #include "Produit.h"
 #include "Usine.h"
 
+#define coutTransitParKm 60
 #define initialRDCost 10000;
 #define nextRDLevelCost(level) (level * exp(level))
 
@@ -33,15 +34,16 @@ public:
 	const std::string& getNom() const;
 	double getCapital() const;
 	const std::pair<int, int>& getCoordonnees() const;
-	int getNiveauRD();
-	const std::vector<std::shared_ptr<Usine>>& getUsines();
-	double getSalaireEmployes();
-	const std::map<int, double>& getStockVentes();
-	const std::map<int, double>& getStockMatierePremiere();
-	const std::map<int, double>& getGrillePrix();
+	int getNiveauRD() const;
+	const std::vector<std::shared_ptr<Usine>>& getUsines() const;
+	double getSalaireEmployes() const;
+	const std::map<int, double>& getStockVentes() const;
+	const std::map<int, double>& getStockMatierePremiere() const;
+	const std::map<int, double>& getGrillePrix() const;
 
 	// Methods
-	void Entreprise::creerUsine(double coutMaintenance, int productivite, int nombreEmployes, std::shared_ptr<Produit> produitType);
+	void creerUsine(double coutMaintenance, int productivite, int nombreEmployes, std::shared_ptr<Produit> produitType);
+	double calculerCoutTransit(const std::shared_ptr<Entreprise> entreprise) const;
 
 private:
 	const std::string nom;
