@@ -1,20 +1,6 @@
 #pragma once
 
-class Produit
-{
-protected:
-	int id;
-	double coutDeBase;
-	double coutDeProduction;
-public:
-	Produit(int id);
-	~Produit();
-	int getId();
-	double getCoutDeBase();
-	double getCoutDeProduction();
-
-	void setCoutDeProduction(double coutDeProd);
-};
+#include "Produit.h"
 
 // class Usine pour créer des produits
 class Usine

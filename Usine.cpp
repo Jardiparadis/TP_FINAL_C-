@@ -12,7 +12,7 @@ double Produit::getCoutDeBase()
 }
 double Produit::getCoutDeProduction()
 {
-	return coutDeProduction; 
+	return coutDeProduction;
 }
 
 void Produit::setCoutDeProduction(double coutDeProd)
@@ -62,7 +62,7 @@ int Usine::getNombreEmployes()
 {
 	return nombreEmployes;
 }
-Produit* Usine::getProduitType() 
+Produit* Usine::getProduitType()
 {
 	return produitType;
 }
@@ -102,7 +102,7 @@ void Usine::ajouterProduitFini(std::shared_ptr<Produit> produit)
 	stockProduitsFinis.push_back(produit);
 }
 
-void Usine::ajouterAuStock(std::vector<std::shared_ptr<Produit>> &produits)
+void Usine::ajouterAuStock(std::vector<std::shared_ptr<Produit>>& produits)
 {
 	stockProduits.insert(std::end(stockProduits), std::begin(produits), std::end(produits));
 	produits.clear();
@@ -196,7 +196,7 @@ std::vector<std::shared_ptr<Produit>> Usine::produire(std::vector<std::pair<Prod
 		std::vector<std::shared_ptr<Produit>> stockTemporaire;
 		for (std::pair<Produit*, int> produit : recette)
 		{
-			for(int j = 0; j < produit.second; j++)
+			for (int j = 0; j < produit.second; j++)
 			{
 				// recuperer un produit de fabrication pour l'utiliser
 				std::shared_ptr<Produit> prodAUtiliser = recupererProduitStockProd(produit.first->getId());
@@ -207,7 +207,7 @@ std::vector<std::shared_ptr<Produit>> Usine::produire(std::vector<std::pair<Prod
 	}
 
 	// calculer le cout de production de chaque produit
-	calculCoutProd:
+calculCoutProd:
 	coutProductionTotal += produitType->getCoutDeBase() * stockAjoutFinal.size();
 	for (std::shared_ptr<Produit> prodFinal : stockAjoutFinal)
 	{
