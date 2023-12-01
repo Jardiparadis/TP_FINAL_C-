@@ -183,6 +183,7 @@ calculCoutProd:
 		prodFinal->setCoutDeProduction(coutProductionTotal / stockAjoutFinal.size());
 	}
 	stockProduitsFinis.insert(std::end(stockProduitsFinis), std::begin(stockAjoutFinal), std::end(stockAjoutFinal));
+	produitType->setCoutDeProduction(stockAjoutFinal.at(0)->getCoutDeProduction());
 	return stockAjoutFinal;
 }
 
