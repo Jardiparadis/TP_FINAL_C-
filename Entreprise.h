@@ -9,12 +9,15 @@
 
 #include "Produit.h"
 #include "Usine.h"
+#include "Marche.h"
 
-#define coutTransitParKm 60
-#define initialRDCost 10000;
 #define nextRDLevelCost(level) (level * exp(level))
 
-//Distinction entre les entreprises qui produissent  des matieres primaires (expl: blé, charbon,..) ou secoudaire(pain, plastique, ..)
+//Distinction entre les entreprises qui produissent  des matieres primaires (expl: blï¿½, charbon,..) ou secoudaire(pain, plastique, ..)
+constexpr double margeVente = 1.35;
+constexpr int coutTransitParKm = 60;
+constexpr double initialRDCost = 10000;
+
 enum class EntrepriseType
 {
 	PRIMAIRE,
@@ -38,13 +41,18 @@ public:
 	int getNiveauRD() const;
 	const std::vector<std::shared_ptr<Usine>>& getUsines() const;
 	double getSalaireEmployes() const;
-	const std::map<int, double>& getStockVentes() const;
-	const std::map<int, double>& getStockMatierePremiere() const;
-	const std::map<int, double>& getGrillePrix() const;
-
-	// Methodes
-	void creerUsine(double coutMaintenance, int productivite, int nombreEmployes, Produit *produitType);
+	const std::map<int, int>& getStockVentes() const;
+	const std::map<int, int>& getStockMatierePremiere() const;
+	const std::map<int, int>& getGrillePrix() const;
+  
+	// Methods
+	void setCapital(double capital);
+	void creerUsine(double coutMaintenance, int productivite, int nombreEmployes, std::shared_ptr<Produit> produitType);
 	double calculerCoutTransit(const std::shared_ptr<Entreprise> entreprise) const;
+	void afficherBilan();
+	void ajouterAuStockMatierePremiere(std::shared_ptr<Produit> produit, int quantite);
+	void retirerAuStockMatierePremiere(std::shared_ptr<Produit> produit, int quantite);
+	void fonctionner();
 
 private:
 	const std::string nom;
@@ -54,10 +62,10 @@ private:
 	std::vector<std::shared_ptr<Usine>> usines;
 	//Salaire universel dans l'entreprise
 	double salaireEmployes;
-	// Produit, quantité
-	std::map<int, double> stockVentes;
-	std::map<int, double> stockMatierePremiere;
-	std::map<int, double> grillePrix;
+	// Produit, quantitÃ©
+	std::map<int, int> stockVentes;
+	std::map<int, int> stockMatierePremiere;
+	std::map<int, int> grillePrix;
 
 	//Augmenter le niveau de R&D de l'entreprises si possible et augmenter la production
 	void ameliorerNiveauRD();
@@ -67,5 +75,7 @@ private:
 
 	//Permet a l'entreprise d'acheter de matieres premiers, de produire et de vendre sa production
 	void fonctionner();
+  
+  //Permet d'acheter des produits
 	void acheterProduits();
 };

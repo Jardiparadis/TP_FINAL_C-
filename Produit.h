@@ -8,7 +8,7 @@
 class Produit
 {
 public:
-    //Constructeur Produit (2 versions possibles, la seconde plus adaptee  aux matieres premieres)
+    //Constructeur Produit (2 versions possibles, la premiere plus adaptee  aux matieres premieres)
     Produit(int _id);
     Produit(int _id, int _coutDeBase, int _coutDeProduction, std::vector<std::pair<Produit*, int>>& _recettes);
 
@@ -21,13 +21,16 @@ public:
     void setCoutDeBase(double _coutDeBase);
     double getCoutDeBase();
     void setCoutDeProduction(double _coutDeProduction);
+    double getCoutDeProductivite();
+    void setCoutDeProductivite(double _coutDeProduction);
     double getCoutDeProduction();
-    std::vector<std::pair<Produit*, int>> getRecette();
+    std::vector<std::pair<std::shared_ptr<Produit>, int>> getRecette();
   
 protected:
     int id;
     double coutDeBase;
     double coutDeProduction;
-    // [ Produit, quantité ]
-    std::vector<std::pair<Produit*, int>> recette;
+    double coutDeProductivite;
+    // [ Produit, quantitÃ© ]
+    std::vector<std::pair<std::shared_ptr<Produit>, int>> recette;
 };
