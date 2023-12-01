@@ -31,7 +31,6 @@ int main()
 	//tardis.creerUsine(1200, 12, 6, p3);
 	tardis.afficherBilan();
 
-	std::cout << marche->getProduit(6)->getCoutDeBase() << std::end;
 	std::cout << e2->getNom() << " : " << std::endl;
 	std::cout << "- capital : " << e2->getCapital() << std::endl;
 
