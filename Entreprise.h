@@ -37,9 +37,9 @@ public:
 	int getNiveauRD() const;
 	const std::vector<std::shared_ptr<Usine>>& getUsines() const;
 	double getSalaireEmployes() const;
-	const std::map<int, double>& getStockVentes() const;
-	const std::map<int, double>& getStockMatierePremiere() const;
-	const std::map<int, double>& getGrillePrix() const;
+	const std::map<int, int>& getStockVentes() const;
+	const std::map<int, int>& getStockMatierePremiere() const;
+	const std::map<int, int>& getGrillePrix() const;
 
 	// Methods
 	void creerUsine(double coutMaintenance, int productivite, int nombreEmployes, Produit *produitType);
@@ -53,9 +53,9 @@ private:
 	std::vector<std::shared_ptr<Usine>> usines;
 	double salaireEmployes;
 	// Produit, quantité
-	std::map<int, double> stockVentes;
-	std::map<int, double> stockMatierePremiere;
-	std::map<int, double> grillePrix;
+	std::map<int, int> stockVentes;
+	std::map<int, int> stockMatierePremiere;
+	std::map<int, int> grillePrix;
 
 	void ameliorerNiveauRD();
 	void payerEmployees();

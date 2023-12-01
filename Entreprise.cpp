@@ -39,17 +39,17 @@ double Entreprise::getSalaireEmployes() const
 	return salaireEmployes;
 }
 
-const std::map<int, double>& Entreprise::getStockVentes() const
+const std::map<int, int>& Entreprise::getStockVentes() const
 {
 	return stockVentes;
 }
 
-const std::map<int, double>& Entreprise::getStockMatierePremiere() const
+const std::map<int, int>& Entreprise::getStockMatierePremiere() const
 {
 	return stockMatierePremiere;
 }
 
-const std::map<int, double>& Entreprise::getGrillePrix() const
+const std::map<int, int>& Entreprise::getGrillePrix() const
 {
 	return grillePrix;
 }
@@ -105,6 +105,36 @@ void Entreprise::payerEmployees()
 void Entreprise::fonctionner()
 {
 	std::cout << "L'entreprise tourne bien." << std::endl;
+	for (std::shared_ptr<Usine> usine : usines)
+	{
+		std::vector<std::shared_ptr<Produit>> stockTemporaire;
+		auto itRecette = usine->getProduitType()->getRecette().begin();
+		while (itRecette != usine->getProduitType()->getRecette().end())
+		{
+			Produit* prodToAdd = itRecette->first;
+			int stockProduitRecette = stockMatierePremiere.at(prodToAdd->getId());
+			if (stockProduitRecette == NULL)
+			{
+				goto finUsineActuelle;
+			}
+			if (stockProduitRecette < itRecette->second)
+			{
+				goto finUsineActuelle;
+			}
+			for (int i = 0; i < itRecette->second; i++)
+			{
+				stockTemporaire.push_back(std::make_shared<Produit>(prodToAdd->getId(), prodToAdd->getCoutDeBase(), 0, prodToAdd->getRecette()));
+			}
+			itRecette++;
+		}
+	processStockUsine:
+
+
+	finUsineActuelle:
+		std::cout << "Pas assez de produit achete pour fournir l'usine" << std::endl;
+		usine->setProductivite(0);
+		goto finUsineActuelle;
+	}
 }
 
 void Entreprise::acheterProduits()
