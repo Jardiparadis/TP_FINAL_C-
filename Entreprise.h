@@ -10,9 +10,10 @@
 #include "Produit.h"
 #include "Usine.h"
 
-#define coutTransitParKm 60
-#define initialRDCost 10000;
 #define nextRDLevelCost(level) (level * exp(level))
+
+constexpr int coutTransitParKm = 60;
+constexpr double initialRDCost = 10000;
 
 enum class EntrepriseType
 {
@@ -37,13 +38,14 @@ public:
 	int getNiveauRD() const;
 	const std::vector<std::shared_ptr<Usine>>& getUsines() const;
 	double getSalaireEmployes() const;
-	const std::map<int, double>& getStockVentes() const;
-	const std::map<int, double>& getStockMatierePremiere() const;
-	const std::map<int, double>& getGrillePrix() const;
-
-	// Methods
+	const std::map<int, int>& getStockVentes() const;
+	const std::map<int, int>& getStockMatierePremiere() const;
+	const std::map<int, int>& getGrillePrix() const;
+	void setCapital(double capital);
 	void creerUsine(double coutMaintenance, int productivite, int nombreEmployes, Produit *produitType);
 	double calculerCoutTransit(const std::shared_ptr<Entreprise> entreprise) const;
+	void ajouterAuStockMatierePremiere(std::shared_ptr<Produit> produit, int quantite);
+	void retirerAuStockMatierePremiere(std::shared_ptr<Produit> produit, int quantite);
 
 private:
 	const std::string nom;
@@ -53,9 +55,9 @@ private:
 	std::vector<std::shared_ptr<Usine>> usines;
 	double salaireEmployes;
 	// Produit, quantité
-	std::map<int, double> stockVentes;
-	std::map<int, double> stockMatierePremiere;
-	std::map<int, double> grillePrix;
+	std::map<int, int> stockVentes;
+	std::map<int, int> stockMatierePremiere;
+	std::map<int, int> grillePrix;
 
 	void ameliorerNiveauRD();
 	void payerEmployees();
