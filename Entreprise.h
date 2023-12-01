@@ -9,10 +9,13 @@
 
 #include "Produit.h"
 #include "Usine.h"
+#include "Marche.h"
 
-#define coutTransitParKm 60
-#define initialRDCost 10000;
 #define nextRDLevelCost(level) (level * exp(level))
+
+constexpr double margeVente = 1.35;
+constexpr int coutTransitParKm = 60;
+constexpr double initialRDCost = 10000;
 
 enum class EntrepriseType
 {
@@ -24,7 +27,6 @@ enum class EntrepriseType
 class Entreprise
 {
 public:
-
 	// Ctor dtor
 	Entreprise(const std::string& _nom, double _capital, double _salaireEmployes);
 	~Entreprise();
@@ -37,14 +39,18 @@ public:
 	int getNiveauRD() const;
 	const std::vector<std::shared_ptr<Usine>>& getUsines() const;
 	double getSalaireEmployes() const;
-	const std::map<int, double>& getStockVentes() const;
-	const std::map<int, double>& getStockMatierePremiere() const;
-	const std::map<int, double>& getGrillePrix() const;
+	const std::map<int, int>& getStockVentes() const;
+	const std::map<int, int>& getStockMatierePremiere() const;
+	const std::map<int, int>& getGrillePrix() const;
 
 	// Methods
-	void creerUsine(double coutMaintenance, int productivite, int nombreEmployes, Produit *produitType);
+	void setCapital(double capital);
+	void creerUsine(double coutMaintenance, int productivite, int nombreEmployes, std::shared_ptr<Produit> produitType);
 	double calculerCoutTransit(const std::shared_ptr<Entreprise> entreprise) const;
 	void afficherBilan();
+	void ajouterAuStockMatierePremiere(std::shared_ptr<Produit> produit, int quantite);
+	void retirerAuStockMatierePremiere(std::shared_ptr<Produit> produit, int quantite);
+	void fonctionner();
 
 private:
 	const std::string nom;
@@ -53,13 +59,12 @@ private:
 	int niveauRD;
 	std::vector<std::shared_ptr<Usine>> usines;
 	double salaireEmployes;
-	// Produit, quantité
-	std::map<int, double> stockVentes;
-	std::map<int, double> stockMatierePremiere;
-	std::map<int, double> grillePrix;
+	// Produit, quantitÃ©
+	std::map<int, int> stockVentes;
+	std::map<int, int> stockMatierePremiere;
+	std::map<int, int> grillePrix;
 
 	void ameliorerNiveauRD();
 	void payerEmployees();
-	void fonctionner();
 	void acheterProduits();
 };
