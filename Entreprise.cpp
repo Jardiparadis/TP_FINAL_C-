@@ -174,3 +174,18 @@ double Entreprise::calculerCoutTransit(const std::shared_ptr<Entreprise> entrepr
 	double distanceEntreEntreprises = sqrt(pow(coordonnees.first - entreprise->getCoordonnees().first, 2) + pow(coordonnees.second - entreprise->getCoordonnees().second, 2));
 	return coutTransitParKm * distanceEntreEntreprises;
 }
+
+void Entreprise::setCapital(double _capital)
+{
+	capital = _capital;
+}
+
+void Entreprise::ajouterAuStockMatierePremiere(std::shared_ptr<Produit> produit, int quantite)
+{
+	stockMatierePremiere[produit->getId()] += quantite;
+}
+
+void Entreprise::retirerAuStockMatierePremiere(std::shared_ptr<Produit> produit, int quantite)
+{
+	stockMatierePremiere[produit->getId()] -= quantite;
+}

@@ -11,11 +11,11 @@
 #include "Usine.h"
 #include "Marche.h"
 
-#define coutTransitParKm 60
-#define initialRDCost 10000;
 #define nextRDLevelCost(level) (level * exp(level))
 
 constexpr double margeVente = 1.35;
+constexpr int coutTransitParKm = 60;
+constexpr double initialRDCost = 10000;
 
 enum class EntrepriseType
 {
@@ -44,8 +44,11 @@ public:
 	const std::map<int, int>& getGrillePrix() const;
 
 	// Methods
+	void setCapital(double capital);
 	void creerUsine(double coutMaintenance, int productivite, int nombreEmployes, Produit *produitType);
 	double calculerCoutTransit(const std::shared_ptr<Entreprise> entreprise) const;
+	void ajouterAuStockMatierePremiere(std::shared_ptr<Produit> produit, int quantite);
+	void retirerAuStockMatierePremiere(std::shared_ptr<Produit> produit, int quantite);
 
 private:
 	const std::string nom;

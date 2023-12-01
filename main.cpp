@@ -1,5 +1,7 @@
 #include <iostream>
-#include "marche.h"
+
+#include "Marche.h"
+#include "Entreprise.h"
 
 int main()
 {
@@ -8,7 +10,7 @@ int main()
 	std::shared_ptr<Entreprise> e1(new Entreprise("aa", 20000, 30));
 	std::shared_ptr<Produit> p1(new Produit(56));
 
-	marche->creerOrdreDeVente(e1, p1, 20, 50);
+	marche->creerOrdreDeVente(e1->getNom(), p1, 20, 50);
 
 	std::cout << marche->chercherOrdreDeVentePourProduit(p1)->size() << std::endl;
 
