@@ -71,7 +71,7 @@ void Entreprise::ameliorerNiveauRD()
 	}
 	capital -= cost;
 
-	// Mettre à jour les usines
+	// Mettre Ã  jour les usines
 	for (const auto& usine : usines)
 	{
 		usine->setProductivite((usine->getProductivite() / niveauRD) * (niveauRD + 1));
@@ -86,7 +86,7 @@ void Entreprise::payerEmployees()
 	for (const auto& usine : usines)
 	{
 		double coutUsine = usine->getNombreEmployes() * salaireEmployes;
-		// Si l'entreprise n'a pas assez de capital pour payer les employés de l'usine, celle-ci se met en grêve
+		// Si l'entreprise n'a pas assez de capital pour payer les employÃ©s de l'usine, celle-ci se met en grÃªve
 		if (capital < coutUsine)
 		{
 			usine->setProductivite(0);
@@ -186,6 +186,24 @@ double Entreprise::calculerCoutTransit(const std::shared_ptr<Entreprise> entrepr
 {
 	double distanceEntreEntreprises = sqrt(pow(coordonnees.first - entreprise->getCoordonnees().first, 2) + pow(coordonnees.second - entreprise->getCoordonnees().second, 2));
 	return coutTransitParKm * distanceEntreEntreprises;
+}
+
+void Entreprise::afficherBilan()
+{
+	std::cout << "\n ---------------------------------- \n" << std::endl;
+	std::cout << "\t Entreprise :\t" << nom << "\n" << std::endl;
+	std::cout << "\t Adresse :\t( " << coordonnees.first <<" , "<< coordonnees.second <<" )\n" << std::endl;
+	std::cout << "\t Capital actuel :\t" << capital << "\n" << std::endl;
+	std::cout << "\t Niveau de R&D actuel :\t" << niveauRD << "\n" << std::endl;
+	std::cout << "\t Production :" << std::endl;
+	int nombreusine = 0;
+	/*for (auto u : usines)
+	{
+		nombreusine++;
+		std::cout << "Usine #" <<nombreusine<< std::endl;
+		u->afficherUsine();
+	}
+	*/
 }
 
 void Entreprise::setCapital(double _capital)

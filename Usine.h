@@ -46,6 +46,7 @@ public:
 
 	std::vector<std::shared_ptr<Produit>> recupererProduits(int quantite);
 
+	void afficherUsine();
 
 protected:
 	double coutMaintenance;

@@ -3,8 +3,11 @@
 #include "Marche.h"
 #include "Entreprise.h"
 
+//#include "map.h"
+
 int main()
 {
+
 	auto marche = Marche::getInstance();
 
 	std::shared_ptr<Entreprise> e1(new Entreprise("aa", 20000, 30));
@@ -24,7 +27,11 @@ int main()
 
 	std::cout << e1->getNom() << " : " << std::endl;
 	std::cout << "- capital : " << e1->getCapital() << std::endl;
+	Entreprise tardis("TARDIS Enterprise", 424242, 100);
+	//tardis.creerUsine(1200, 12, 6, p3);
+	tardis.afficherBilan();
 
+	std::cout << marche->getProduit(6)->getCoutDeBase() << std::end;
 	std::cout << e2->getNom() << " : " << std::endl;
 	std::cout << "- capital : " << e2->getCapital() << std::endl;
 

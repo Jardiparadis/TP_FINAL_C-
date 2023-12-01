@@ -47,6 +47,7 @@ public:
 	void setCapital(double capital);
 	void creerUsine(double coutMaintenance, int productivite, int nombreEmployes, std::shared_ptr<Produit> produitType);
 	double calculerCoutTransit(const std::shared_ptr<Entreprise> entreprise) const;
+	void afficherBilan();
 	void ajouterAuStockMatierePremiere(std::shared_ptr<Produit> produit, int quantite);
 	void retirerAuStockMatierePremiere(std::shared_ptr<Produit> produit, int quantite);
 	void fonctionner();
@@ -58,7 +59,7 @@ private:
 	int niveauRD;
 	std::vector<std::shared_ptr<Usine>> usines;
 	double salaireEmployes;
-	// Produit, quantité
+	// Produit, quantitÃ©
 	std::map<int, int> stockVentes;
 	std::map<int, int> stockMatierePremiere;
 	std::map<int, int> grillePrix;
