@@ -4,6 +4,7 @@
 
 #include "Produit.h"
 
+// Un ordre de vente est une ressource mise en vente par une entreprise
 class OrdreVente
 {
 public:

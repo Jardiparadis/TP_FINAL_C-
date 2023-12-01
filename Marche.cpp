@@ -60,6 +60,7 @@ void Marche::acheterOrdreDeVente(std::string nomEntrepriseAcheteuse, std::string
 	{
 		if (ordreVente.getProduit()->getId() == produit->getId() && ordreVente.getVendeur() == nomEntrepriseVendeuse)
 		{
+			// Partie non réalisable avec notre architecture actuelle, un Observer aurait été préférable ici
 			/*entrepriseAcheteuse->setCapital(entrepriseAcheteuse->getCapital() - ordreVente.getPrix());
 			entrepriseVendeuse->setCapital(entrepriseVendeuse->getCapital() + ordreVente.getPrix());
 			entrepriseAcheteuse->ajouterAuStockMatierePremiere(produit, ordreVente.getQuantite());
