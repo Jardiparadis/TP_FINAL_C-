@@ -49,6 +49,7 @@ public:
 	double calculerCoutTransit(const std::shared_ptr<Entreprise> entreprise) const;
 	void ajouterAuStockMatierePremiere(std::shared_ptr<Produit> produit, int quantite);
 	void retirerAuStockMatierePremiere(std::shared_ptr<Produit> produit, int quantite);
+	void fonctionner();
 
 private:
 	const std::string nom;
@@ -64,6 +65,5 @@ private:
 
 	void ameliorerNiveauRD();
 	void payerEmployees();
-	void fonctionner();
 	void acheterProduits();
 };
