@@ -123,3 +123,21 @@ double Entreprise::calculerCoutTransit(const std::shared_ptr<Entreprise> entrepr
 	double distanceEntreEntreprises = sqrt(pow(coordonnees.first - entreprise->getCoordonnees().first, 2) + pow(coordonnees.second - entreprise->getCoordonnees().second, 2));
 	return coutTransitParKm * distanceEntreEntreprises;
 }
+
+void Entreprise::afficherBilan()
+{
+	std::cout << "\n ---------------------------------- \n" << std::endl;
+	std::cout << "\t Entreprise :\t" << nom << "\n" << std::endl;
+	std::cout << "\t Adresse :\t( " << coordonnees.first <<" , "<< coordonnees.second <<" )\n" << std::endl;
+	std::cout << "\t Capital actuel :\t" << capital << "\n" << std::endl;
+	std::cout << "\t Niveau de R&D actuel :\t" << niveauRD << "\n" << std::endl;
+	std::cout << "\t Production :" << std::endl;
+	int nombreusine = 0;
+	/*for (auto u : usines)
+	{
+		nombreusine++;
+		std::cout << "Usine #" <<nombreusine<< std::endl;
+		u->afficherUsine();
+	}
+	*/
+}

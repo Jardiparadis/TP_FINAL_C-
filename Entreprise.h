@@ -44,6 +44,7 @@ public:
 	// Methods
 	void creerUsine(double coutMaintenance, int productivite, int nombreEmployes, Produit *produitType);
 	double calculerCoutTransit(const std::shared_ptr<Entreprise> entreprise) const;
+	void afficherBilan();
 
 private:
 	const std::string nom;

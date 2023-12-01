@@ -199,3 +199,13 @@ std::vector<std::shared_ptr<Produit>> Usine::recupererProduits(int quantite)
 	stockProduitsFinis.erase(stockProduitsFinis.begin(), stockProduitsFinis.begin() + quantite);
 	return tempoStockProduits;
 }
+
+void Usine::afficherUsine()
+{
+	std::cout << "Nombre d'employes :\t" << nombreEmployes << "\n" << std::endl;
+	std::cout << "Fabrique :\t" << " le produit #" << produitType->getId() << " )\n" << std::endl;
+	std::cout << "Niveau de productivite :\t" << productivite << "\n" << std::endl;
+	std::cout << "Dernier cout de Maintenance :\t" << coutMaintenance << "$ \n" << std::endl;
+	
+	std::cout << "\n" << std::endl;
+}

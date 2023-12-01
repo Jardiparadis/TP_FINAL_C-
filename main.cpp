@@ -1,8 +1,11 @@
 #include <iostream>
 #include "marche.h"
 
+//#include "map.h"
+
 int main()
 {
+
 	auto marche = Marche::getInstance();
 
 	std::vector<std::pair<Produit*, int>> recetteBrut;
@@ -18,6 +21,10 @@ int main()
 	marche->enregistrerProduit(std::make_shared<Produit>(p1));
 	marche->enregistrerProduit(std::make_shared<Produit>(p2));
 	marche->enregistrerProduit(std::make_shared<Produit>(p3));
+
+	Entreprise tardis("TARDIS Enterprise", 424242, 100);
+	//tardis.creerUsine(1200, 12, 6, p3);
+	tardis.afficherBilan();
 
 	std::cout << marche->getProduit(6)->getCoutDeBase() << std::endl;
 
