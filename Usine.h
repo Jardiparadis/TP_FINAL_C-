@@ -8,7 +8,7 @@ class Usine
 public:
 
 	// constructeur
-	Usine(double _coutMaintenance, int _productivite, int _nombreEmployes, Produit* _produitType);
+	Usine(double _coutMaintenance, int _productivite, int _nombreEmployes, std::shared_ptr<Produit> _produitType);
 
 	// destructeur
 	~Usine();
@@ -17,7 +17,7 @@ public:
 	double getCoutMaintenance();
 	int getProductivite();
 	int getNombreEmployes();
-	Produit* getProduitType();
+	std::shared_ptr<Produit> getProduitType();
 	std::vector<std::shared_ptr<Produit>> getStockProduitsFinis();
 
 	// setters
@@ -36,7 +36,7 @@ public:
 	std::shared_ptr<Produit> recupererProduitStockProd(int idProduit);
 
 	// verifie si l'usine peut produit ce tour-ci
-	bool Usine::peutProduire(std::vector<std::pair<Produit*, int>> recette);
+	bool Usine::peutProduire(std::vector<std::pair<std::shared_ptr<Produit>, int>> recette);
 
 	// Produire des produits
 	std::vector<std::shared_ptr<Produit>> produire(int salaireEmployes);
@@ -53,5 +53,5 @@ protected:
 	int nombreEmployes;
 	std::vector<std::shared_ptr<Produit>> stockProduits;
 	std::vector<std::shared_ptr<Produit>> stockProduitsFinis;
-	Produit* produitType;
+	std::shared_ptr<Produit> produitType;
 };

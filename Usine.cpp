@@ -2,7 +2,7 @@
 #include <vector>
 #include "Usine.h"
 
-Usine::Usine(double _coutMaintenance, int _productivite, int _nombreEmployes, Produit* _produitType)
+Usine::Usine(double _coutMaintenance, int _productivite, int _nombreEmployes, std::shared_ptr<Produit> _produitType)
 {
 	coutMaintenance = _coutMaintenance;
 	productivite = _productivite;
@@ -14,7 +14,6 @@ Usine::Usine(double _coutMaintenance, int _productivite, int _nombreEmployes, Pr
 Usine::~Usine()
 {
 	stockProduits.clear();
-	delete produitType;
 }
 
 // getters
@@ -30,7 +29,7 @@ int Usine::getNombreEmployes()
 {
 	return nombreEmployes;
 }
-Produit* Usine::getProduitType()
+std::shared_ptr<Produit> Usine::getProduitType()
 {
 	return produitType;
 }
@@ -94,7 +93,7 @@ std::shared_ptr<Produit> Usine::recupererProduitStockProd(int idProduit)
 	return prodARecuperer;
 }
 
-bool Usine::peutProduire(std::vector<std::pair<Produit*, int>> recette)
+bool Usine::peutProduire(std::vector<std::pair<std::shared_ptr<Produit>, int>> recette)
 {
 	// si matiere premiere
 	if (recette.size() == NULL)
@@ -106,7 +105,7 @@ bool Usine::peutProduire(std::vector<std::pair<Produit*, int>> recette)
 
 	for (int i = 0; i < productivite; i++)
 	{
-		for (std::pair<Produit*, int> produit : recette)
+		for (std::pair<std::shared_ptr<Produit>, int> produit : recette)
 		{
 			for (int j = 0; j < produit.second; j++)
 			{
@@ -142,9 +141,9 @@ std::vector<std::shared_ptr<Produit>> Usine::produire(int salaireEmployes)
 {
 	std::vector<std::shared_ptr<Produit>> stockAjoutFinal;
 	double coutProductionTotal = coutMaintenance + (salaireEmployes * nombreEmployes);
-	std::vector<std::pair<Produit*, int>> recette = produitType->getRecette();
+	std::vector<std::pair<std::shared_ptr<Produit>, int>> recette = produitType->getRecette();
 
-	if (!peutProduire(recette))
+	if (!peutProduire(recette) || productivite == 0)
 	{
 		return stockAjoutFinal;
 	}
@@ -163,7 +162,7 @@ std::vector<std::shared_ptr<Produit>> Usine::produire(int salaireEmployes)
 	for (int i = 0; i < productivite; i++)
 	{
 		std::vector<std::shared_ptr<Produit>> stockTemporaire;
-		for (std::pair<Produit*, int> produit : recette)
+		for (std::pair<std::shared_ptr<Produit>, int> produit : recette)
 		{
 			for (int j = 0; j < produit.second; j++)
 			{
@@ -183,6 +182,7 @@ calculCoutProd:
 		prodFinal->setCoutDeProduction(coutProductionTotal / stockAjoutFinal.size());
 	}
 	stockProduitsFinis.insert(std::end(stockProduitsFinis), std::begin(stockAjoutFinal), std::end(stockAjoutFinal));
+	produitType->setCoutDeProduction(stockAjoutFinal.at(0)->getCoutDeProduction());
 	return stockAjoutFinal;
 }
 

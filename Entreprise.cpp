@@ -54,12 +54,6 @@ const std::map<int, int>& Entreprise::getGrillePrix() const
 	return grillePrix;
 }
 
-void vendre(std::shared_ptr<Produit> produit, int quantite, double prix)
-{
-	//TO DO
-	//apres ordre de vente
-}
-
 void acheterMatierePremiere(int quantite)
 {
 	//TO DO
@@ -104,7 +98,77 @@ void Entreprise::payerEmployees()
 
 void Entreprise::fonctionner()
 {
+	// achat produits
+	acheterProduits();
+
+	// remplir les usines et les faire fonctionner
 	std::cout << "L'entreprise tourne bien." << std::endl;
+	for (std::shared_ptr<Usine> usine : usines)
+	{
+		std::vector<std::shared_ptr<Produit>> stockTemporaire;
+		std::vector<std::pair<std::shared_ptr<Produit>, int>> recette = usine->getProduitType()->getRecette();
+		bool hasNotEnoughStock = false;
+		auto itRecette = recette.begin();
+		while (itRecette != recette.end())
+		{
+			std::shared_ptr<Produit> prodToAdd = itRecette->first;
+			if (stockMatierePremiere.find(prodToAdd->getId()) == stockMatierePremiere.end())
+			{
+				hasNotEnoughStock = true;
+				break;
+			}
+			int stockProduitRecette = stockMatierePremiere.at(prodToAdd->getId());
+			if (stockProduitRecette == 0)
+			{
+				hasNotEnoughStock = true;
+				break;
+			}
+			if (stockProduitRecette < itRecette->second)
+			{
+				hasNotEnoughStock = true;
+				break;
+			}
+			for (int i = 0; i < itRecette->second; i++)
+			{
+				stockTemporaire.push_back(std::make_shared<Produit>(prodToAdd->getId(), prodToAdd->getCoutDeBase(), 0, prodToAdd->getRecette()));
+			}
+			itRecette++;
+		}
+		if (hasNotEnoughStock)
+		{
+			std::cout << "Pas assez de produit achete pour fournir l'usine" << std::endl;
+			usine->setProductivite(0);
+		}
+
+		usine->ajouterAuStock(stockTemporaire);
+		usine->produire(salaireEmployes);
+		std::vector<std::shared_ptr<Produit>> produitsFabriques = usine->recupererProduits();
+		if (stockVentes.find(usine->getProduitType()->getId()) == stockVentes.end())
+		{
+			stockVentes.insert({ usine->getProduitType()->getId() , produitsFabriques.size() });
+		}
+		else 
+		{
+			stockVentes.at(usine->getProduitType()->getId()) += produitsFabriques.size();
+		}
+	}
+
+	//vente des produits
+	auto itProduitsVentes = stockVentes.begin();
+	while (itProduitsVentes != stockVentes.end())
+	{
+		for (std::shared_ptr<Usine> usine : usines)
+		{
+			if (usine->getProduitType()->getId() == itProduitsVentes->first)
+			{
+				double prixProduit = usine->getProduitType()->getCoutDeProduction() * margeVente;
+				std::shared_ptr<Marche> marche = Marche::getInstance();
+				marche->creerOrdreDeVente(nom, std::make_shared<Produit>(itProduitsVentes->first), itProduitsVentes->second, prixProduit);
+			}
+		}
+		itProduitsVentes++;
+	}
+
 }
 
 void Entreprise::acheterProduits()
@@ -112,7 +176,7 @@ void Entreprise::acheterProduits()
 
 }
 
-void Entreprise::creerUsine(double coutMaintenance, int productivite, int nombreEmployes, Produit *produitType)
+void Entreprise::creerUsine(double coutMaintenance, int productivite, int nombreEmployes, std::shared_ptr<Produit> produitType)
 {
 	std::shared_ptr<Usine> usine(new Usine(coutMaintenance, productivite, nombreEmployes, produitType));
 	usines.push_back(usine);

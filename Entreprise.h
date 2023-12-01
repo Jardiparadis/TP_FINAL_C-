@@ -9,9 +9,11 @@
 
 #include "Produit.h"
 #include "Usine.h"
+#include "Marche.h"
 
 #define nextRDLevelCost(level) (level * exp(level))
 
+constexpr double margeVente = 1.35;
 constexpr int coutTransitParKm = 60;
 constexpr double initialRDCost = 10000;
 
@@ -25,7 +27,6 @@ enum class EntrepriseType
 class Entreprise
 {
 public:
-
 	// Ctor dtor
 	Entreprise(const std::string& _nom, double _capital, double _salaireEmployes);
 	~Entreprise();
@@ -41,11 +42,14 @@ public:
 	const std::map<int, int>& getStockVentes() const;
 	const std::map<int, int>& getStockMatierePremiere() const;
 	const std::map<int, int>& getGrillePrix() const;
+
+	// Methods
 	void setCapital(double capital);
-	void creerUsine(double coutMaintenance, int productivite, int nombreEmployes, Produit *produitType);
+	void creerUsine(double coutMaintenance, int productivite, int nombreEmployes, std::shared_ptr<Produit> produitType);
 	double calculerCoutTransit(const std::shared_ptr<Entreprise> entreprise) const;
 	void ajouterAuStockMatierePremiere(std::shared_ptr<Produit> produit, int quantite);
 	void retirerAuStockMatierePremiere(std::shared_ptr<Produit> produit, int quantite);
+	void fonctionner();
 
 private:
 	const std::string nom;
@@ -61,6 +65,5 @@ private:
 
 	void ameliorerNiveauRD();
 	void payerEmployees();
-	void fonctionner();
 	void acheterProduits();
 };
