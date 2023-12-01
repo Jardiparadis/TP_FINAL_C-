@@ -106,12 +106,12 @@ void Entreprise::fonctionner()
 	for (std::shared_ptr<Usine> usine : usines)
 	{
 		std::vector<std::shared_ptr<Produit>> stockTemporaire;
-		std::vector<std::pair<Produit*, int>> recette = usine->getProduitType()->getRecette();
+		std::vector<std::pair<std::shared_ptr<Produit>, int>> recette = usine->getProduitType()->getRecette();
 		bool hasNotEnoughStock = false;
 		auto itRecette = recette.begin();
 		while (itRecette != recette.end())
 		{
-			Produit* prodToAdd = itRecette->first;
+			std::shared_ptr<Produit> prodToAdd = itRecette->first;
 			if (stockMatierePremiere.find(prodToAdd->getId()) == stockMatierePremiere.end())
 			{
 				hasNotEnoughStock = true;
@@ -176,7 +176,7 @@ void Entreprise::acheterProduits()
 
 }
 
-void Entreprise::creerUsine(double coutMaintenance, int productivite, int nombreEmployes, Produit *produitType)
+void Entreprise::creerUsine(double coutMaintenance, int productivite, int nombreEmployes, std::shared_ptr<Produit> produitType)
 {
 	std::shared_ptr<Usine> usine(new Usine(coutMaintenance, productivite, nombreEmployes, produitType));
 	usines.push_back(usine);

@@ -5,7 +5,7 @@
 
 #include "Produit.h"
 
-Produit::Produit(int _id, int _coutDeBase, int _coutDeProduction, std::vector<std::pair<Produit*, int>>& _recette)
+Produit::Produit(int _id, int _coutDeBase, int _coutDeProduction, std::vector<std::pair<std::shared_ptr<Produit>, int>>& _recette)
     : id(_id), coutDeBase(_coutDeBase), coutDeProduction(_coutDeProduction), recette(_recette)
 {
 }
@@ -71,7 +71,7 @@ void Produit::setCoutDeProductivite(double _coutDeProductivite)
     coutDeProductivite = _coutDeProductivite;
 }
 
-std::vector<std::pair<Produit*, int>> Produit::getRecette()
+std::vector<std::pair<std::shared_ptr<Produit>, int>> Produit::getRecette()
 {
     return recette;
 }

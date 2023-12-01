@@ -9,11 +9,11 @@ int main()
 
 	std::shared_ptr<Entreprise> e1(new Entreprise("aa", 20000, 30));
 	std::shared_ptr<Produit> p1(new Produit(56));
-	e1->creerUsine(1000, 5, 10, p1.get());
+	e1->creerUsine(1000, 5, 10, p1);
 	std::shared_ptr<Entreprise> e2(new Entreprise("bb", 22000, 35));
-	std::vector<std::pair<Produit*, int>> rec1 = { {p1.get(), 5} };
+	std::vector<std::pair<std::shared_ptr<Produit>, int>> rec1 = { {p1, 5} };
 	std::shared_ptr<Produit> p2(new Produit(56, 20, 0, rec1));
-	e2->creerUsine(1200, 2, 12, p2.get());
+	e2->creerUsine(1200, 2, 12, p2);
 
 	marche->creerOrdreDeVente(e1->getNom(), p1, 20, 50);
 
