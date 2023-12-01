@@ -14,6 +14,8 @@
 #define initialRDCost 10000;
 #define nextRDLevelCost(level) (level * exp(level))
 
+constexpr double margeVente = 1.35;
+
 enum class EntrepriseType
 {
 	PRIMAIRE,
