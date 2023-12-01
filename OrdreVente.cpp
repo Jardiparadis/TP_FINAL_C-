@@ -5,9 +5,9 @@
 #include "OrdreVente.h"
 
 //Contructeur et Destructeur d'Ordre de Vente
-OrdreVente::OrdreVente (std::shared_ptr<Entreprise> _ptrVendeur, std::shared_ptr<Produit> _ptrProduit, int _quantite, double _prix)
+OrdreVente::OrdreVente (std::string _nomEntreprise, std::shared_ptr<Produit> _ptrProduit, int _quantite, double _prix)
 {
-	ptrVendeur = _ptrVendeur;
+	nomEntreprise = _nomEntreprise;
 	ptrProduit = _ptrProduit;
 	quantite = _quantite;
 	prix= _prix;
@@ -22,14 +22,14 @@ OrdreVente::~OrdreVente()
 
 
 //Setter et Getter de Vendeur
-void OrdreVente::setVendeur(std::shared_ptr<Entreprise> _ptrVendeur)
+void OrdreVente::setVendeur(std::string _nomEntreprise)
 {
-	ptrVendeur = _ptrVendeur;
+	nomEntreprise = _nomEntreprise;
 }
 
-std::shared_ptr<Entreprise> OrdreVente::getVendeur() const
+std::string OrdreVente::getVendeur() const
 {
-	return ptrVendeur;
+	return nomEntreprise;
 }
 
 
