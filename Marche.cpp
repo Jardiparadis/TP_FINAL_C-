@@ -65,10 +65,10 @@ void Marche::acheterOrdreDeVente(std::shared_ptr<Entreprise> entrepriseAcheteuse
 	{
 		if (ordreVente.getProduit()->getId() == produit->getId() && ordreVente.getVendeur()->getNom() == entrepriseVendeuse->getNom())
 		{
-			// entrepriseAcheteuse.capital -= prix
-			// entrepriseVendeuse.capital += prix
-			// entrepriseAcheteuse.addToStock
-			// entrepriseVendeuse.removeToStock
+			entrepriseAcheteuse->setCapital(entrepriseAcheteuse->getCapital() - ordreVente.getPrix());
+			entrepriseVendeuse->setCapital(entrepriseVendeuse->getCapital() + ordreVente.getPrix());
+			entrepriseAcheteuse->ajouterAuStockMatierePremiere(produit, ordreVente.getQuantite());
+			entrepriseVendeuse->retirerAuStockMatierePremiere(produit, ordreVente.getQuantite());
 		}
 		i += 1;
 	}

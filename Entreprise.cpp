@@ -39,17 +39,17 @@ double Entreprise::getSalaireEmployes() const
 	return salaireEmployes;
 }
 
-const std::map<int, double>& Entreprise::getStockVentes() const
+const std::map<int, int>& Entreprise::getStockVentes() const
 {
 	return stockVentes;
 }
 
-const std::map<int, double>& Entreprise::getStockMatierePremiere() const
+const std::map<int, int>& Entreprise::getStockMatierePremiere() const
 {
 	return stockMatierePremiere;
 }
 
-const std::map<int, double>& Entreprise::getGrillePrix() const
+const std::map<int, int>& Entreprise::getGrillePrix() const
 {
 	return grillePrix;
 }
@@ -122,4 +122,19 @@ double Entreprise::calculerCoutTransit(const std::shared_ptr<Entreprise> entrepr
 {
 	double distanceEntreEntreprises = sqrt(pow(coordonnees.first - entreprise->getCoordonnees().first, 2) + pow(coordonnees.second - entreprise->getCoordonnees().second, 2));
 	return coutTransitParKm * distanceEntreEntreprises;
+}
+
+void Entreprise::setCapital(double _capital)
+{
+	capital = _capital;
+}
+
+void Entreprise::ajouterAuStockMatierePremiere(std::shared_ptr<Produit> produit, int quantite)
+{
+	stockMatierePremiere[produit->getId()] += quantite;
+}
+
+void Entreprise::retirerAuStockMatierePremiere(std::shared_ptr<Produit> produit, int quantite)
+{
+	stockMatierePremiere[produit->getId()] -= quantite;
 }
