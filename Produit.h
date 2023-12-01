@@ -10,7 +10,7 @@ class Produit
 public:
     //Constructeur Produit (2 versions possibles, la premiere plus adaptee  aux matieres premieres)
     Produit(int _id);
-    Produit(int _id, int _coutDeBase, int _coutDeProduction, std::vector<std::pair<Produit*, int>>& _recettes);
+    Produit(int _id, int _coutDeBase, int _coutDeProduction, std::vector<std::pair<std::shared_ptr<Produit>, int>>& _recettes);
 
     //Destructeur Produit
     ~Produit();

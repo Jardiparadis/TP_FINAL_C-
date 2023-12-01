@@ -52,6 +52,8 @@ public:
 	void afficherBilan();
 	void ajouterAuStockMatierePremiere(std::shared_ptr<Produit> produit, int quantite);
 	void retirerAuStockMatierePremiere(std::shared_ptr<Produit> produit, int quantite);
+
+	//Permet a l'entreprise d'acheter de matieres premiers, de produire et de vendre sa production
 	void fonctionner();
 
 private:
@@ -72,9 +74,6 @@ private:
 
 	//Employes tous au meme salaire, si l'entreprise n'a pas assez de capital, la productivite tombe a 0
 	void payerEmployees();
-
-	//Permet a l'entreprise d'acheter de matieres premiers, de produire et de vendre sa production
-	void fonctionner();
   
   //Permet d'acheter des produits
 	void acheterProduits();
