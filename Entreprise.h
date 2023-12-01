@@ -9,6 +9,7 @@
 
 #include "Produit.h"
 #include "Usine.h"
+#include "Marche.h"
 
 #define coutTransitParKm 60
 #define initialRDCost 10000;
@@ -26,7 +27,6 @@ enum class EntrepriseType
 class Entreprise
 {
 public:
-
 	// Ctor dtor
 	Entreprise(const std::string& _nom, double _capital, double _salaireEmployes);
 	~Entreprise();

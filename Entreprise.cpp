@@ -54,12 +54,6 @@ const std::map<int, int>& Entreprise::getGrillePrix() const
 	return grillePrix;
 }
 
-void vendre(int idProduit, int quantite, double prix)
-{
-	//TO DO
-	//apres ordre de vente
-}
-
 void acheterMatierePremiere(int quantite)
 {
 	//TO DO
@@ -156,7 +150,8 @@ void Entreprise::fonctionner()
 			if (usine->getProduitType()->getId() == itProduitsVentes->first)
 			{
 				double prixProduit = usine->getProduitType()->getCoutDeProduction() * margeVente;
-				vendre(itProduitsVentes->first, itProduitsVentes->second, prixProduit);
+				std::shared_ptr<Marche> marche = Marche::getInstance();
+				marche->creerOrdreDeVente(std::shared_ptr<Entreprise>(this), std::make_shared<Produit>(itProduitsVentes->first), itProduitsVentes->second, prixProduit);
 			}
 		}
 	}
