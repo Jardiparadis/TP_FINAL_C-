@@ -16,6 +16,8 @@ public:
     void setCoutDeBase(double _coutDeBase);
     double getCoutDeBase();
     void setCoutDeProduction(double _coutDeProduction);
+    double getCoutDeProductivite();
+    void setCoutDeProductivite(double _coutDeProduction);
     double getCoutDeProduction();
     std::vector<std::pair<Produit*, int>> getRecette();
   
@@ -23,6 +25,7 @@ protected:
     int id;
     double coutDeBase;
     double coutDeProduction;
+    double coutDeProductivite;
     // [ Produit, quantité ]
     std::vector<std::pair<Produit*, int>> recette;
 };

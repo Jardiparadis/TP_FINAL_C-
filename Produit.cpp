@@ -61,6 +61,16 @@ double Produit::getCoutDeProduction()
     return coutDeProduction;
 }
 
+double Produit::getCoutDeProductivite()
+{
+    return coutDeProductivite;
+}
+
+void Produit::setCoutDeProductivite(double _coutDeProductivite)
+{
+    coutDeProductivite = _coutDeProductivite;
+}
+
 std::vector<std::pair<Produit*, int>> Produit::getRecette()
 {
     return recette;
