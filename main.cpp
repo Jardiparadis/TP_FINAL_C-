@@ -1,8 +1,15 @@
 #include <iostream>
+#include <deque>
+#include <cstdlib>
+#include <chrono>
+
 #include "marche.h"
+#include "map.h"
 
 int main()
 {
+	Map map(20, 20);
+	
 	auto marche = Marche::getInstance();
 
 	std::vector<std::pair<Produit*, int>> recetteBrut;

@@ -9,6 +9,7 @@
 
 #include "Produit.h"
 #include "Usine.h"
+#include "OrdreVente.h"
 
 #define coutTransitParKm 60
 #define initialRDCost 10000;
@@ -44,6 +45,7 @@ public:
 	// Methods
 	void creerUsine(double coutMaintenance, int productivite, int nombreEmployes, Produit *produitType);
 	double calculerCoutTransit(const std::shared_ptr<Entreprise> entreprise) const;
+	void acheter(Produit*, int quantite, std::vector<std::shared_ptr<OrdreVente>>);
 
 private:
 	const std::string nom;
