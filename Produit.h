@@ -8,9 +8,14 @@
 class Produit
 {
 public:
+    //Constructeur Produit (2 versions possibles, la seconde plus adaptee  aux matieres premieres)
     Produit(int _id);
     Produit(int _id, int _coutDeBase, int _coutDeProduction, std::vector<std::pair<Produit*, int>>& _recettes);
+
+    //Destructeur Produit
     ~Produit();
+
+    // Getters et Setters
     int getId();
    //void setId(int _id);
     void setCoutDeBase(double _coutDeBase);
