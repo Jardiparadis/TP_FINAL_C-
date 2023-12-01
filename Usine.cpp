@@ -2,6 +2,7 @@
 #include <vector>
 #include "Usine.h"
 
+// constructeur
 Usine::Usine(double _coutMaintenance, int _productivite, int _nombreEmployes, std::shared_ptr<Produit> _produitType)
 {
 	coutMaintenance = _coutMaintenance;
@@ -10,13 +11,11 @@ Usine::Usine(double _coutMaintenance, int _productivite, int _nombreEmployes, st
 	produitType = _produitType;
 }
 
-// destructeur
 Usine::~Usine()
 {
 	stockProduits.clear();
 }
 
-// getters
 double Usine::getCoutMaintenance()
 {
 	return coutMaintenance;
@@ -33,13 +32,28 @@ std::shared_ptr<Produit> Usine::getProduitType()
 {
 	return produitType;
 }
+std::shared_ptr<Produit> Usine::recupererProduitStockProd(int idProduit)
+{
+	std::shared_ptr<Produit> prodARecuperer;
+	auto iterator = std::begin(stockProduits);
+	while (iterator != std::end(stockProduits))
+	{
+		if ((*iterator)->getId() == idProduit)
+		{
+			prodARecuperer = (*iterator);
+			stockProduits.erase(iterator);
+			break;
+		}
+		iterator++;
+	}
+	return prodARecuperer;
+}
 std::vector<std::shared_ptr<Produit>> Usine::getStockProduitsFinis()
 {
 	std::vector<std::shared_ptr<Produit>> tempoStockProduits = stockProduitsFinis;
 	return tempoStockProduits;
 }
 
-// setters
 void Usine::setCoutMaintenance(double _coutMaintenance)
 {
 	coutMaintenance = _coutMaintenance;
@@ -72,25 +86,9 @@ void Usine::ajouterProduitFini(std::shared_ptr<Produit> produit)
 void Usine::ajouterAuStock(std::vector<std::shared_ptr<Produit>>& produits)
 {
 	stockProduits.insert(std::end(stockProduits), std::begin(produits), std::end(produits));
-	produits.clear();
-}
 
-// recuperer produit de fabrication au stock
-std::shared_ptr<Produit> Usine::recupererProduitStockProd(int idProduit)
-{
-	std::shared_ptr<Produit> prodARecuperer;
-	auto iterator = std::begin(stockProduits);
-	while (iterator != std::end(stockProduits))
-	{
-		if ((*iterator)->getId() == idProduit)
-		{
-			prodARecuperer = (*iterator);
-			stockProduits.erase(iterator);
-			break;
-		}
-		iterator++;
-	}
-	return prodARecuperer;
+	// clear de la liste de produits passé en parametre car transfet des produits
+	produits.clear();
 }
 
 bool Usine::peutProduire(std::vector<std::pair<std::shared_ptr<Produit>, int>> recette)
@@ -101,6 +99,7 @@ bool Usine::peutProduire(std::vector<std::pair<std::shared_ptr<Produit>, int>> r
 		return true;
 	}
 
+	// stock permettant de garder tous les produits necessaires a la production ( à la recette)
 	std::vector<std::shared_ptr<Produit>> stockTemporaire = stockProduits;
 
 	for (int i = 0; i < productivite; i++)
@@ -114,6 +113,7 @@ bool Usine::peutProduire(std::vector<std::pair<std::shared_ptr<Produit>, int>> r
 				auto iterator = std::begin(stockTemporaire);
 				while (iterator != std::end(stockTemporaire))
 				{
+					// si le produit est bien dans la recette
 					if ((*iterator)->getId() == produit.first->getId())
 					{
 						prodAUtiliser = (*iterator);
@@ -122,6 +122,8 @@ bool Usine::peutProduire(std::vector<std::pair<std::shared_ptr<Produit>, int>> r
 					}
 					iterator++;
 				}
+
+				// si le produit n'est pas dans la recette
 				if (prodAUtiliser == nullptr)
 				{
 					std::cout << "l'entreprise ne peux pas produire, pas assez de stock de produits de fabrication" << std::endl;
@@ -134,15 +136,14 @@ bool Usine::peutProduire(std::vector<std::pair<std::shared_ptr<Produit>, int>> r
 	return true;
 }
 
-
-
-// Produire des produits
 std::vector<std::shared_ptr<Produit>> Usine::produire(int salaireEmployes)
 {
 	std::vector<std::shared_ptr<Produit>> stockAjoutFinal;
 	double coutProductionTotal = coutMaintenance + (salaireEmployes * nombreEmployes);
 	std::vector<std::pair<std::shared_ptr<Produit>, int>> recette = produitType->getRecette();
 
+	// s'il n'a pas assez de produit de fabrication pour faire la recette
+	// ou s'il a une productivité nulle
 	if (!peutProduire(recette) || productivite == 0)
 	{
 		return stockAjoutFinal;
