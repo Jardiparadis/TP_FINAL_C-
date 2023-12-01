@@ -57,7 +57,6 @@ const std::map<int, int>& Entreprise::getGrillePrix() const
 void acheterMatierePremiere(int quantite)
 {
 	//TO DO
-	//apres ordre de vente
 }
 
 
