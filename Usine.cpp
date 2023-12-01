@@ -144,7 +144,7 @@ std::vector<std::shared_ptr<Produit>> Usine::produire(int salaireEmployes)
 	double coutProductionTotal = coutMaintenance + (salaireEmployes * nombreEmployes);
 	std::vector<std::pair<Produit*, int>> recette = produitType->getRecette();
 
-	if (!peutProduire(recette))
+	if (!peutProduire(recette) || productivite == 0)
 	{
 		return stockAjoutFinal;
 	}
